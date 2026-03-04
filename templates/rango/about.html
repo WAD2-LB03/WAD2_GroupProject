@@ -1,0 +1,21 @@
+{% extends "rango/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    About Rango
+{% endblock %}
+
+{% block body_block %}
+    <h1>Rango shmango...</h1>
+    <div>
+        Rango says here is the about page.<br />
+        <h3> This tutorial has been put together by ... <strong>he's coming<strong> :O</h3><br />
+        {% if visits %}
+            <h3> He's already been here... <strong>Visits: {{ visits }}</strong> times... </h3>
+        {% endif %}
+        </div>
+    <div>
+        <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
+        <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+    </div>
+{% endblock %}
