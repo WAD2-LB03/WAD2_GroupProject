@@ -13,19 +13,13 @@ from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
 
 def index(request):
     context_dict = {}
-    context_dict['categories'] = game_list
-    context_dict['reviews'] = most_viewed_list
-
-    visitor_cookie_handler(request)
 
     response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
 
 def about(request):
-    visitor_cookie_handler(request)
 
     context_dict = {}
-    context_dict["visits"] = request.session["visits"]
 
     return render(request, 'gamecritique/about.html', context=context_dict)
 
