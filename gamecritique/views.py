@@ -7,22 +7,18 @@ from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
 
-from rango.models import Category
-from rango.models import Page
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from gamecritique.models import Game
+from gamecritique.models import Review
+from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
 
 def index(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    most_viewed_list = Page.objects.order_by('-views')[:5]
-
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
-    context_dict['categories'] = category_list
-    context_dict['pages'] = most_viewed_list
+    context_dict['categories'] = game_list
+    context_dict['reviews'] = most_viewed_list
 
     visitor_cookie_handler(request)
 
-    response = render(request, 'rango/index.html', context=context_dict)
+    response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
 
 def about(request):
@@ -31,68 +27,52 @@ def about(request):
     context_dict = {}
     context_dict["visits"] = request.session["visits"]
 
-    return render(request, 'rango/about.html', context=context_dict)
+    return render(request, 'gamecritique/about.html', context=context_dict)
 
-def show_category(request, category_name_slug):
+def show_game(request, game_name_slug):
     context_dict = {}
 
     try:
-        category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+        game = Game.objects.get(slug=game_name_slug)
+        reviews = Review.objects.filter(game=game)
 
-        context_dict['category'] = category
-        context_dict['pages'] = pages
+        context_dict['game'] = game
+        context_dict['reviews'] = reviews
 
-    except Category.DoesNotExist:
-        context_dict['category'] = None
-        context_dict['pages'] = None
+    except Game.DoesNotExist:
+        context_dict['game'] = None
+        context_dict['reviews'] = None
 
-    return render(request, 'rango/category.html', context=context_dict)
-
-@login_required
-def add_category(request):
-    form = CategoryForm()
-
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-
-            return redirect(reverse("rango:index"))
-        else:
-            print(form.errors)
-
-    return render(request, 'rango/add_category.html', {'form': form})
+    return render(request, 'gamecritique/game.html', context=context_dict)
 
 @login_required
-def add_page(request, category_name_slug):
+def add_review(request, game_name_slug):
     try:
-        category = Category.objects.get(slug=category_name_slug)
-    except Category.DoesNotExist:
-        category = None
+        game = Game.objects.get(slug=game_name_slug)
+    except Game.DoesNotExist:
+        game = None
 
-    if category is None:
-        return redirect(reverse("rango:index"))
+    if game is None:
+        return redirect(reverse("gamecritique:index"))
 
-    form = PageForm()
+    form = ReviewForm()
 
     if request.method == 'POST':
-        form = PageForm(request.POST)
+        form = ReviewForm(request.POST)
 
         if form.is_valid():
-            if category:
-                page = form.save(commit=False)
-                page.category = category
-                page.views = 0
-                page.save()
+            if game:
+                review = form.save(commit=False)
+                review.game = game
+                review.views = 0
+                review.save()
 
-                return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
+                return redirect(reverse('gamecritique:show_game', kwargs={'game_name_slug': game_name_slug}))
         else:
             print(form.errors)
 
-    context_dict = {'form': form, 'category': category}
-    return render(request, 'rango/add_page.html', context=context_dict)
+    context_dict = {'form': form, 'game': game}
+    return render(request, 'gamecritique/add_review.html', context=context_dict)
 
 def register(request):
     registered = False
@@ -121,7 +101,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, "rango/register.html", 
+    return render(request, "gamecritique/register.html", 
                   context = {"user_form": user_form,
                              "profile_form": profile_form,
                              "registered": registered})
@@ -136,24 +116,24 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse("rango:index"))
+                return redirect(reverse("gamecritique:index"))
             else:
-                return HttpResponse("Your Rango account is DISABLED AHAHAHAHAHA")
+                return HttpResponse("Account disabled")
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied")
     else:
-        return render(request, "rango/login.html")
+        return render(request, "gamecritique/login.html")
     
 @login_required
 def restricted(request):
-    return render(request, "rango/restricted.html")
+    return render(request, "gamecritique/restricted.html")
 
 @login_required
 def user_logout(request):
     logout(request)
 
-    return redirect(reverse("rango:index"))
+    return redirect(reverse("gamecritique:index"))
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
@@ -163,6 +143,7 @@ def get_server_side_cookie(request, cookie, default_val=None):
 
     return val
 
+# We'll change this to track something other than visits at some point
 def visitor_cookie_handler(request):
     visits = int(get_server_side_cookie(request, "visits", "1"))
 

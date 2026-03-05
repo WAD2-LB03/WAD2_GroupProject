@@ -1,0 +1,21 @@
+{% extends "gamecritique/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+    {% if registered %}
+        <a href="{% url 'gamecritique:index' %}">Return to the homepage.</a><br />
+    {% else %}
+        <form id="user_form" method="post" action="{% url 'gamecritique:register' %}" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <input type="submit" name="submit" value="Register" />
+        </form>
+    {% endif %}
+{% endblock %}
