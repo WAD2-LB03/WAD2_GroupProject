@@ -100,6 +100,9 @@ def register(request):
                              "profile_form": profile_form,
                              "registered": registered})
 
+def profile(request):
+    return render(request, "gamecritique/profile.html")
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -128,6 +131,10 @@ def user_logout(request):
     logout(request)
 
     return redirect(reverse("gamecritique:index"))
+
+def gamepage(request):
+    return render(request, "gamecritique/gamepage.html")
+
 
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)

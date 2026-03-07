@@ -1,0 +1,68 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    align-items: center;
+    display: flex;
+    color: #14A35B;
+    background-color: #01361B;
+}
+
+.nav-left, .nav-center, .nav-right {
+    flex: 1;
+    padding: 0 20px;
+}
+.nav-left {
+    text-align: left;
+}
+.nav-center {
+    text-align: center;
+}
+.nav-right {
+    text-align: right;
+}
+
+a.navlink {
+    display: inline-block;
+    font-size: 200%;
+    top: -50%;
+    position: relative;
+    color: #14A35B;
+    transition: transform 0.2s ease;
+}
+a.navlink:hover {
+    transform: scale(1.2);
+}
+a.navlink:active {
+    color: #33B6BB;
+}
+
+.logo {
+    font-size: 300%;
+    text-decoration: none;
+    font-weight: bold;
+}
+.logo-game {
+    color: #33B6BB
+}
+.logo-crit {
+    color: #14A35B;
+}
+.logo-ique {
+    color: #0C5933;
+}
+
+.separation {
+    display: inline;
+    color: #14A35B;
+    white-space: pre-wrap;
+    font-size: 400%;
+    line-height: 50%;
+}
+
+body {
+    background-color: #CDEDDD;
+    color: #0C5933
+}
