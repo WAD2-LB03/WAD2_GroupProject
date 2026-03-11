@@ -8,7 +8,7 @@ class Tag(models.Model):
     MAX_TAG = 50
 
     name = models.CharField(max_length=MAX_TAG, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -26,7 +26,7 @@ class Game(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, related_name="games") # Tags for games
 
     name = models.CharField(max_length=MAX_NAME, unique=True)
-    description = models.TextField(max_length=MAX_DESC)
+    description = models.TextField(max_length=MAX_DESC, blank=True, null=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -42,11 +42,11 @@ class Review(models.Model):
     MAX_CONTENT = 1000
 
     game = models.ForeignKey(Game, on_delete=models.CASCADE) # Links review to game
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews") # Links review to user
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews", blank=True, null=True) # Links review to user
 
-    content = models.TextField(max_length=MAX_CONTENT)
-    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)]) # Rating on 1-5 scale
-    created_at_timestamp = models.DateTimeField(auto_now_add=True) # Timestamp of creation
+    content = models.TextField(max_length=MAX_CONTENT, blank=True, null=True)
+    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)], blank=True, null=True) # Rating on 1-5 scale
+    created_at_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True) # Timestamp of creation
 
     class Meta:
         verbose_name_plural = "Reviews"
@@ -60,10 +60,10 @@ class Comment(models.Model):
     MAX_CONTENT = 1000
     
     game = models.ForeignKey(Game, on_delete=models.CASCADE) # Links comment to game
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments") # Links comment to user
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments", blank=True, null=True) # Links comment to user
 
-    content = models.TextField(max_length=MAX_CONTENT)
-    created_at_timestamp = models.DateTimeField(auto_now_add=True) # Timestamp of creation
+    content = models.TextField(max_length=MAX_CONTENT, blank=True, null=True)
+    created_at_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True) # Timestamp of creation
 
     class Meta:
         verbose_name_plural = "Comments"
