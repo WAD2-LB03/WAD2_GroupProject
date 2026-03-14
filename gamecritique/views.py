@@ -6,14 +6,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from datetime import datetime
+import random
 
 from gamecritique.models import Game
 from gamecritique.models import Review
 from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
 
+# Random game is chosen from database to be displayed on Index page each time opened
 def index(request):
-    context_dict = {}
-
+    games = Game.objects.all()
+    random_game = random.choice(games)
+    context_dict = {"random_game": random_game}
     response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
 

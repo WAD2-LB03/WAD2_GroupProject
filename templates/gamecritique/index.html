@@ -7,4 +7,22 @@
 
 {% block body_block %}
 
+<div>
+    {% if random_game %}
+    <h2>Featured Game</h2>
+    {% endif %}
+
+    <img src="{{ random_game.image_url }}"
+         alt="{{ random_game.name }}">
+
+    <h3>{{ random_game.name }}</h3>
+
+    <div>
+        <h4>Tags</h4>
+        {% for tag in random_game.tags.all %}
+        {{ tag.name }},
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}
