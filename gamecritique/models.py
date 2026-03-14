@@ -2,7 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-# Each tag that can be assigned to each game - has a name. There is an N:N
+# Each tag that can be assigned to each game - has a name (from Steam). There is an N:N
 # relationship between tags and games.
 class Tag(models.Model):
     MAX_TAG = 50
@@ -17,8 +17,8 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-# Each game in the database - has a name, a description, and
-# relevant category tags. Reviews and comments are linked to games.
+# Each game in the database - has a name, a description (from Steam), and
+# relevant category tags (from Steam) and an image (Steam). Reviews and comments are linked to games.
 class Game(models.Model): 
     MAX_NAME = 128
     MAX_DESC = 1000
@@ -27,6 +27,7 @@ class Game(models.Model):
 
     name = models.CharField(max_length=MAX_NAME, unique=True)
     description = models.TextField(max_length=MAX_DESC, blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
