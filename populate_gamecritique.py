@@ -36,6 +36,13 @@ def populate():
             image = details.get("header_image") # Image for game
             game.image_url = image
             game.save()
+            release_date = details.get("release_date")
+            date = release_date.get("date", "")
+            release_year = None
+            if len(date) >= 4:
+                release_year = int(date[-4:]) # Get last 4 characters of date info, should be year
+            game.release_year = release_year
+            game.save()
 
             genres = details.get("genres")
             for genre in genres:

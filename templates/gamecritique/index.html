@@ -18,10 +18,12 @@
     <h3>{{ random_game.name }}</h3>
 
     <div>
-        <h4>Tags</h4>
-        {% for tag in random_game.tags.all %}
-        {{ tag.name }},
+        <h4>Tags: </h4>{% for tag in random_game.tags.all %}{{ tag.name }},
         {% endfor %}
+    </div>
+
+    <div>
+        <h5>Release: </h5>{{ random_game.release_year}}
     </div>
 </div>
 

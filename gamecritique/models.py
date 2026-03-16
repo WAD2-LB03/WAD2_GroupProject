@@ -18,7 +18,8 @@ class Tag(models.Model):
         return self.name
 
 # Each game in the database - has a name, a description (from Steam), and
-# relevant category tags (from Steam) and an image (Steam). Reviews and comments are linked to games.
+# relevant category tags (from Steam), an image (Steam), release year (Steam). 
+# Reviews and comments are linked to games.
 class Game(models.Model): 
     MAX_NAME = 128
     MAX_DESC = 1000
@@ -28,6 +29,7 @@ class Game(models.Model):
     name = models.CharField(max_length=MAX_NAME, unique=True)
     description = models.TextField(max_length=MAX_DESC, blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
+    release_year = models.IntegerField(blank=True, null=True)
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
