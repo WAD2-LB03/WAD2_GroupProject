@@ -6,6 +6,7 @@ export class Preloader extends Phaser.Scene {
     }
 
     init() {
+        console.log("basizna");
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5;
 
@@ -30,6 +31,8 @@ export class Preloader extends Phaser.Scene {
     }
 
     preload() {
+        this.load.setPath('../static/');   // This is an empty string before this, but gamecritique/ is always the beginning for some reason so we have to ../
+        console.log(this.load.path);
         //  Load the assets for the game - see ./src/assets.js
         for (let type in ASSETS) {
             for (let key in ASSETS[type]) {
