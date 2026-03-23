@@ -58,11 +58,11 @@ class Review(models.Model):
         return self.content
 
 # Each comment in the database - has a maximum length of 1000 and
-# a timestamp for creation. Comments are linked to both a game and a user.
+# a timestamp for creation. Comments are linked to both a review and a user.
 class Comment(models.Model):
     MAX_CONTENT = 1000
     
-    game = models.ForeignKey(Game, on_delete=models.CASCADE) # Links comment to game
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="comments", blank=True, null=True) # Links comment to review
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments", blank=True, null=True) # Links comment to user
 
     content = models.TextField(max_length=MAX_CONTENT, blank=True, null=True)
