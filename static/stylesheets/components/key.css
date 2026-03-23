@@ -1,0 +1,48 @@
+#key {
+    position: fixed;
+    all: unset;
+    transition: transform .3s ease;
+    z-index: 1000;
+}
+
+#key:hover {
+    transform: scale(1.1);
+}
+
+#key img {
+    width: 200%;
+}
+
+.sparkle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: gold;
+    opacity: 1;
+    animation: sparkle 1s ease-out forwards;
+    filter: drop-shadow(0 0 6px gold);
+
+    clip-path: polygon(
+        50% 0%,   /* top point */
+        65% 35%,  /* inward curve */
+        100% 50%, /* right point */
+        65% 65%,  /* inward */
+        50% 100%, /* bottom */
+        35% 65%,  /* inward */
+        0% 50%,   /* left */
+        35% 35%   /* inward */
+    );
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(calc(var(--sparkle-scale) * .5));
+        opacity: .5;
+    } 50% {
+        transform: scale(var(--sparkle-scale));
+        opacity: 1;
+    } 100% {
+        transform: scale(calc(var(--sparkle-scale) * .5));
+        opacity: 0;
+    }
+}

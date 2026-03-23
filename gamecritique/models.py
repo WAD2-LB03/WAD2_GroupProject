@@ -1,6 +1,8 @@
 from django.db import models
+from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 # Each tag that can be assigned to each game - has a name (from Steam). There is an N:N
 # relationship between tags and games.
@@ -80,10 +82,19 @@ class Comment(models.Model):
 class UserProfile(models.Model):
     MAX_BIO = 1000
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE) # 1:1 relationship with User model
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile') # 1:1 relationship with User model
 
     picture = models.ImageField(upload_to="profile_images", blank=True)
     bio = models.TextField(max_length=MAX_BIO, blank=True)
 
+    # Game related variables
+    has_key = models.BooleanField(default=False)
+
     def __str__(self):
         return self.user.username
+
+# Called after every User model is saved - Links the User model to a UserProfile model if it was newly created
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)

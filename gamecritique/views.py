@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 import random
 
-from gamecritique.models import Game
+from gamecritique.models import Game, UserProfile
 from gamecritique.models import Review
 from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
 
@@ -17,11 +17,11 @@ def index(request):
     games = Game.objects.all()
     random_game = random.choice(games)
     context_dict = {"random_game": random_game}
+
     response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
 
 def about(request):
-
     context_dict = {}
 
     return render(request, 'gamecritique/about.html', context=context_dict)
@@ -84,12 +84,9 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
             if "picture" in request.FILES:
-                profile.picture = request.FILES["picture"]
-
-            profile.save()
+                user.profile.picture = request.FILES["picture"]
+                user.profile.save()
 
             registered = True
         else:
@@ -146,6 +143,18 @@ def get_server_side_cookie(request, cookie, default_val=None):
         val = default_val
 
     return val
+
+# Called when the key has been clicked - sets has_key to True for the current user
+@login_required
+def collect_key(request):
+    if request.method == 'POST':
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        profile.has_key = True
+        profile.save()
+
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error'}, status=400)
 
 # We'll change this to track something other than visits at some point
 def visitor_cookie_handler(request):

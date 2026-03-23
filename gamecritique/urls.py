@@ -14,4 +14,5 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     path("gamepage", views.gamepage, name="gamepage"),
     path("profile", views.profile, name="profile"),
+    path("collect-key/", views.collect_key, name='collect_key'), # AJAX path for updating database without reloading page
 ]

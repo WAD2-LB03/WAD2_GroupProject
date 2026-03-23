@@ -5,6 +5,13 @@
     Homepage
 {% endblock %}
 
+{% block head_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/index.css' %}" />
+    <script>
+        const collectUrl = "{% url 'gamecritique:collect_key' %}";
+    </script>
+{% endblock %}
+
 {% block body_block %}
 
 <div>
@@ -26,5 +33,12 @@
         <h5>Release: </h5>{{ random_game.release_year}}
     </div>
 </div>
+
+{% if user.is_authenticated and not user.profile.has_key %}
+    <script src="{% static 'scripts/interactivity/key.js' %}?v={% now 'U' %}" defer></script>
+    <div id="key-container">
+        <button id="key"><img src="{% static 'images/keyGen.png' %}" alt="keytastic"></button>
+    </div>
+{% endif %}
 
 {% endblock %}
