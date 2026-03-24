@@ -4,7 +4,7 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/style.css' %}?v={% now 'U' %}" />
         <title>GameCritique - {% block title_block %} How to Game with Critique! {% endblock %}</title>
         {% block head_block %}
         {% endblock %}
@@ -18,7 +18,7 @@
                 <div class="nav-center">
                     <a class="navlink" href="{% url 'gamecritique:index' %}">Home</a>
                     <span class="separation">  |  </span>
-                    <a class="navlink" href="{% url 'gamecritique:index' %}">Search</a>
+                    <a class="navlink" href="{% url 'gamecritique:search' %}">Search</a>
                 </div>
                 <div class="nav-right">
                     {% if user.is_authenticated %}

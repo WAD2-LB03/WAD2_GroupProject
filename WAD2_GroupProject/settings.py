@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'django.contrib.postgres',     Didn't get around to implementing, but would allow for more accurate searching in the future
     'gamecritique',
 ]
 

@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
+from django.db.models import Q
 
 from datetime import datetime
 import random
@@ -25,6 +27,19 @@ def about(request):
     context_dict = {}
 
     return render(request, 'gamecritique/about.html', context=context_dict)
+
+def search(request):
+    context_dict = {}
+
+    return render(request, 'gamecritique/search.html', context=context_dict)
+
+# AJAX call when the search button is clicked - gives input and returns list of games containing that string 
+def search_games(request):
+    query = request.GET.get('q', '')
+
+    results = Game.objects.filter(Q(slug__icontains=slugify(query)) | Q(name__icontains=query))
+
+    return JsonResponse({'results': list(results)})
 
 def show_game(request, game_name_slug):
     context_dict = {}
@@ -135,16 +150,7 @@ def user_logout(request):
 def gamepage(request):
     return render(request, "gamecritique/gamepage.html")
 
-
-def get_server_side_cookie(request, cookie, default_val=None):
-    val = request.session.get(cookie)
-
-    if not val:
-        val = default_val
-
-    return val
-
-# Called when the key has been clicked - sets has_key to True for the current user
+# AJAX call when the key has been clicked - sets has_key to True for the current user
 @login_required
 def collect_key(request):
     if request.method == 'POST':
@@ -155,6 +161,14 @@ def collect_key(request):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'error'}, status=400)
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+
+    if not val:
+        val = default_val
+
+    return val
 
 # We'll change this to track something other than visits at some point
 def visitor_cookie_handler(request):

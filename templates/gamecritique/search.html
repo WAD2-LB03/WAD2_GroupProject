@@ -1,0 +1,16 @@
+{% extends "gamecritique/base.html" %}
+{% load static %}
+
+{% block title_block %}
+    Search
+{% endblock %}
+
+{% block head_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/search.css' %}" />
+    <script src="{% static 'scripts/interactivity/search.js' %}?v={% now 'U' %}" defer></script>
+{% endblock %}
+
+{% block body_block %}
+    <input type='text' id="search" placeholder="Search for tags separated by ',' - Free To Play, Action, RPG">
+    <button type='button' id="search-button">Search</button>
+{% endblock %}
