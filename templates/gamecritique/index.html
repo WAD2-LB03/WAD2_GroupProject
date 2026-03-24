@@ -24,7 +24,9 @@
          alt="{{ random_game.name }}">
 
     <div class="featured_right">
-    <h3 class="featured_game_name">{{ random_game.name }}</h3>
+    <h3 class="featured_game_name">
+        <a href="{% url 'gamecritique:show_game' random_game.slug %}">
+        {{ random_game.name }}</a></h3>
 
     <div class="tag_section">
         <span class="tag_text">Tags:</span>

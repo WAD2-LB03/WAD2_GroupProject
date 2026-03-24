@@ -31,7 +31,7 @@ def show_game(request, game_name_slug):
 
     try:
         game = Game.objects.get(slug=game_name_slug)
-        reviews = Review.objects.filter(game=game)
+        reviews = Review.objects.filter(game=game).order_by('-created_at_timestamp')
 
         context_dict['game'] = game
         context_dict['reviews'] = reviews
