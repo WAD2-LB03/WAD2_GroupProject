@@ -30,7 +30,8 @@
             <ul>
             {% for review in reviews %}
             <div style="margin-bottom: 20px;">
-                <p><strong>{{ review.user.username }}</strong> — {{ review.rating }}★</p>
+                <a href="{% url 'gamecritique:show_review' review.id %}">
+                <p><strong>{{ review.user.username }}</strong> — {{ review.rating }}★</p></a>
                 <p>{{ review.content }}</p>
                 <p><small>{{ review.created_at_timestamp }}</small></p>
             </div>
