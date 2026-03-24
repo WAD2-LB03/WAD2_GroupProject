@@ -128,7 +128,8 @@ def register(request):
 def profile(request):
     profile = request.user.profile
     user = request.user
-    context = {'user': user, 'profile': profile}
+    has_key = profile.has_key
+    context = {'user': user, 'profile': profile, 'has_key': has_key}
     return render(request, "gamecritique/profile.html", context)
 
 def user_login(request):

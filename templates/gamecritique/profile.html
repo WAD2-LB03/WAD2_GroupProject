@@ -33,8 +33,9 @@
     </div>
 </div>
 
-
+{% if has_key %}
 <div class="game_link">
-    <a href="{% url 'gamecritique:gamepage' %}">funny fun gametime</a>
+    <a href="{% url 'gamecritique:gamepage' %}">What's this?</a>
 </div>
+{% endif %}
 {% endblock %}
