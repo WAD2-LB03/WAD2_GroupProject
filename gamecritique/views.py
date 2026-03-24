@@ -6,12 +6,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 from datetime import datetime
 import random
 
 from gamecritique.models import Game, UserProfile
-from gamecritique.models import Review
+from gamecritique.models import Review, Comment
 from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
 
 # Random game is chosen from database to be displayed on Index page each time opened
@@ -46,7 +47,7 @@ def show_game(request, game_name_slug):
 
     try:
         game = Game.objects.get(slug=game_name_slug)
-        reviews = Review.objects.filter(game=game)
+        reviews = Review.objects.filter(game=game).order_by('-created_at_timestamp')
 
         context_dict['game'] = game
         context_dict['reviews'] = reviews
@@ -56,6 +57,14 @@ def show_game(request, game_name_slug):
         context_dict['reviews'] = None
 
     return render(request, 'gamecritique/game.html', context=context_dict)
+
+def show_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    comments = review.comments.all().order_by('-created_at_timestamp')
+
+    context = {'review': review, 'comments': comments,}
+
+    return render(request, 'gamecritique/review.html', context)
 
 @login_required
 def add_review(request, game_name_slug):

@@ -13,10 +13,28 @@
     {% if game %}
         <h1>{{ game.name }}</h1>
 
+        <img src="{{ game.image_url }}"
+             alt="{{ game.name }}"
+             style="width:300px; border-radius:10px;">
+
+        <p><strong>Release:</strong> {{ game.release_year }}</p>
+
+        <p><strong>Tags:</strong>
+        {% for tag in game.tags.all %}
+            {{ tag.name }}
+        {% endfor %}
+    </p>
+
+        <h2>Reviews</h2>
         {% if reviews %}
             <ul>
             {% for review in reviews %}
-                <li><a href="{{ review.url }}">{{ review.title }}</a></li>
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'gamecritique:show_review' review.id %}">
+                <p><strong>{{ review.user.username }}</strong> — {{ review.rating }}★</p></a>
+                <p>{{ review.content }}</p>
+                <p><small>{{ review.created_at_timestamp }}</small></p>
+            </div>
             {% endfor %}
             </ul>
 

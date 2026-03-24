@@ -14,20 +14,37 @@
 
 {% block body_block %}
 
-<div>
+<div class="featured_container">
     {% if random_game %}
-    <h2>Featured Game</h2>
-    {% endif %}
+    <h2 class="featured_title">Featured Game</h2>
 
-    <div class="small-game">
-        <img class="sg-img" src="{{ random_game.image_url }}" alt="{{ random_game.name }}-image">
-        <div class="sg-text">
-            <p>{{ random_game.name }}</p>
-            <p>Tags: {% for tag in random_game.tags.all %}{{ tag.name }}, {% endfor %}</p>
-            <p>Release: {{ random_game.release_year}}</p>
+    <div class="featured_section">
+    <img class="featured_image"
+         src="{{ random_game.image_url }}"
+         alt="{{ random_game.name }}">
+
+    <div class="featured_right">
+    <h3 class="featured_game_name">
+        <a href="{% url 'gamecritique:show_game' random_game.slug %}">
+        {{ random_game.name }}</a></h3>
+
+    <div class="tag_section">
+        <span class="tag_text">Tags:</span>
+        <div class="tag_list">
+        {% for tag in random_game.tags.all %}
+            <span class="tag_name">{{ tag.name }},</span>
+        {% endfor %}
         </div>
     </div>
+
+    <div class="featured_release">
+        <span class="release_text">Release:</span>
+        <span class="release_year">{{ random_game.release_year}}</span>
+    </div>
+{% endif %}
 </div>
+
+
 
 {% if user.is_authenticated and not user.profile.has_key %}
     <script src="{% static 'scripts/interactivity/key.js' %}?v={% now 'U' %}" defer></script>
