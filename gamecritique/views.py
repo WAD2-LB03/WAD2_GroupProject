@@ -124,8 +124,12 @@ def register(request):
                              "profile_form": profile_form,
                              "registered": registered})
 
+@login_required
 def profile(request):
-    return render(request, "gamecritique/profile.html")
+    profile = request.user.profile
+    user = request.user
+    context = {'user': user, 'profile': profile}
+    return render(request, "gamecritique/profile.html", context)
 
 def user_login(request):
     if request.method == "POST":
