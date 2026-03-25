@@ -1,3 +1,15 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+hr {
+    border: none;  /* Overwrite everything before adding new style */
+    border-top: 4px solid #14A35B;
+    width: 85%;
+    margin: 20px auto;
+}
+
 .navbar {
     position: fixed;
     top: 0;
@@ -8,6 +20,8 @@
     display: flex;
     color: #14A35B;
     background-color: #01361B;
+
+    z-index: 1000;
 }
 
 .nav-left, .nav-center, .nav-right {

@@ -4,7 +4,7 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/style.css' %}?v={% now 'U' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/base.css' %}?v={% now 'U' %}" />
         <title>GameCritique - {% block title_block %} How to Game with Critique! {% endblock %}</title>
         {% block head_block %}
         {% endblock %}
@@ -34,6 +34,8 @@
             </nav>
         </div>
 
+        <br>
+
         <div>
             <br><br><br><br><br>
         {% block body_block %}
@@ -44,7 +46,5 @@
             {% block sidebar_block %}
             {% endblock %}
         </div>
-
-        <hr />
     </body>
 </html>

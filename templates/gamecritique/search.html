@@ -6,11 +6,20 @@
 {% endblock %}
 
 {% block head_block %}
-    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/search.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/search.css' %}?v={% now 'U' %}" />
+    <script>
+        const searchUrl = "{% url 'gamecritique:search_games' %}"
+        const gameUrl = "{% url 'gamecritique:show_game' 'reallycoolplaceholder' %}"
+    </script>
     <script src="{% static 'scripts/interactivity/search.js' %}?v={% now 'U' %}" defer></script>
 {% endblock %}
 
 {% block body_block %}
-    <input type='text' id="search" placeholder="Search for tags separated by ',' - Free To Play, Action, RPG">
-    <button type='button' id="search-button">Search</button>
+    <div id="search">
+        <input type='text' id="search-bar" placeholder="Search for a game, or search for tags with '#<tag>'">
+    </div>
+
+    <br><hr><br>
+
+    <div id="search-results"></div>
 {% endblock %}

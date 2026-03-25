@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404
 
 from datetime import datetime
@@ -14,12 +14,17 @@ import random
 from gamecritique.models import Game, UserProfile
 from gamecritique.models import Review, Comment
 from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
+from gamecritique.helper import parseTags, mostPopular
 
 # Random game is chosen from database to be displayed on Index page each time opened
 def index(request):
     games = Game.objects.all()
     random_game = random.choice(games)
-    context_dict = {"random_game": random_game}
+    trending_games = mostPopular(Game.objects)[:3]
+    context_dict = {
+        "random_game": random_game,
+        "trending_games": trending_games,    
+    }
 
     response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
@@ -36,11 +41,34 @@ def search(request):
 
 # AJAX call when the search button is clicked - gives input and returns list of games containing that string 
 def search_games(request):
-    query = request.GET.get('q', '')
+    query = request.GET.get('q', '')  # Returns the string after '?q=' or the second parameter '' if there's nothing
+    
+    # Gets results with tags that match exact input list of tags (ignoring case)
+    if (query.startswith('#')): 
+        tags = parseTags(query)
+        results = Game.objects.all()
 
-    results = Game.objects.filter(Q(slug__icontains=slugify(query)) | Q(name__icontains=query))
+        for tag in tags:
+            results = results.filter(tags__name__iexact=tag)
 
-    return JsonResponse({'results': list(results)})
+        results = mostPopular(results)[:10]
+
+    # Gets results with titles that contain input text
+    else:
+        results = mostPopular(Game.objects.filter(Q(slug__icontains=slugify(query)) | Q(name__icontains=query)))[:10]
+
+    data = [
+        {
+            "name": game.name,
+            "slug": game.slug,
+            "image": game.image_url,
+            "release": game.release_year,
+            "tags": [tag.name for tag in game.tags.all()]
+        }
+        for game in results
+    ]
+
+    return JsonResponse({'results': data})
 
 def show_game(request, game_name_slug):
     context_dict = {}

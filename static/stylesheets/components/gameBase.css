@@ -1,0 +1,14 @@
+.tag_list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tag_name {
+    padding: 5px 10px;
+    margin: 5px; border-radius: 5px; font-size: small;
+    border: 2px solid rgba(0,0,0,0.1);
+    flex: 1 1 calc(100% / 3 - 10px);
+    text-align: center;
+}

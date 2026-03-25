@@ -1,16 +1,19 @@
+#key-container {
+    position: absolute;
+
+    top: 12%;
+    left: 0;
+}
+
 #key {
-    position: fixed;
-    all: unset;
     transition: transform .3s ease;
-    z-index: 1000;
+    width: 50px;
+
+    z-index: 1001;   /* Will position it over the navbar when set to fixed */
 }
 
 #key:hover {
     transform: scale(1.1);
-}
-
-#key img {
-    width: 200%;
 }
 
 .sparkle {
@@ -32,6 +35,8 @@
         0% 50%,   /* left */
         35% 35%   /* inward */
     );
+
+    z-index: 1002;
 }
 
 @keyframes sparkle {

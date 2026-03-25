@@ -23,7 +23,8 @@ function collect() {
 }
 
 function collectAnimation() {
-    key.style.pointerEvents = "none"; // Disable further clicking
+    key.style.pointerEvents = 'none'; // Disable further clicking
+    key.style.position = 'fixed'; // No longer affected by scroll & can position on top of navbar
 
     // Calculating slide animation variables
     const keyRect = key.getBoundingClientRect();

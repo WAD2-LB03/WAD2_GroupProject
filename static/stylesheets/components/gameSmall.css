@@ -1,0 +1,45 @@
+@import 'gameBase.css';
+
+.game-small {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 300px;
+    width: 100%;
+    padding: 10px 12px;
+    scroll-snap-align: start;
+
+    background: #AEEBD9;
+    border-radius: 10px;
+
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px 5px;
+    align-items: flex-start;
+    position: relative;
+    text-align: center;
+}
+
+.game-small img {
+    flex: 1;
+    height: auto;
+    object-fit: cover;
+    max-width: 50%;
+    align-self: center;
+
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.game-small .gs-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+.game-small span {
+    margin: 0;
+    line-height: 1.3;
+}

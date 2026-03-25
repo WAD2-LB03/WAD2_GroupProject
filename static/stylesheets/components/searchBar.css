@@ -1,0 +1,25 @@
+#search {
+    display: flex;
+    justify-content: center;
+}
+
+#search-bar {
+    background-color: #51b475;
+    border-color: #2a623f;
+
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #2a623f;
+    caret-color: #b1eec7;
+
+    padding-left: 10px;
+    width: 40%;
+    height: 30px;
+}
+
+#search-bar::placeholder {
+    color: #3a915b;
+    opacity: 1;
+    font-style: italic;
+    letter-spacing: 0px;
+}
