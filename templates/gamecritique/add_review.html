@@ -6,23 +6,30 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Add a Review</h1>
-    <div>
-        <form id="add_review_form" method="post" action="/gamecritique/game/{{ game.slug }}/add_review/">
-            {% csrf_token %}
-            {% csrf_token %}
+<h1>Add a Review</h1>
 
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
+<form id="review_form" method="post" action="">
+    {% csrf_token %}
 
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
+    <div style="display: flex; align-items: flex-end; gap: 30px;">
+        
+        <div>
+            {{ form.content.errors }}
+            {{ form.content }}
+        </div>
 
-            <input type="submit" name="submit" value="Add Review" />
-        </form>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+                <label for="{{ form.rating.id_for_label }}"><strong>Rating:</strong></label><br>
+                {{ form.rating.errors }}
+                {{ form.rating }}
+            </div>
+
+            <div>
+                <input type="submit" name="submit" value="Add Review" />
+            </div>
+        </div>
+
     </div>
+</form>
 {% endblock %}

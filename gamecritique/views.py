@@ -13,7 +13,8 @@ import random
 
 from gamecritique.models import Game, UserProfile
 from gamecritique.models import Review, Comment
-from gamecritique.forms import ReviewForm, UserForm, UserProfileForm
+
+from gamecritique.forms import ReviewForm, UserForm, UserProfileForm, CommentForm
 from gamecritique.helper import parseTags, mostPopular
 
 # Random game is chosen from database to be displayed on Index page each time opened
@@ -89,8 +90,36 @@ def show_game(request, game_name_slug):
 def show_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     comments = review.comments.all().order_by('-created_at_timestamp')
+    form = CommentForm()
 
-    context = {'review': review, 'comments': comments,}
+    context = {'review': review, 'comments': comments, 'form': form,}
+
+    return render(request, 'gamecritique/review.html', context)
+
+@login_required
+def add_comment(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.review = review
+            comment.user = request.user
+            comment.save()
+
+            return redirect(reverse('gamecritique:show_review', kwargs={'review_id': review.id}))
+    else:
+        form = CommentForm()
+
+    comments = review.comments.all().order_by('-created_at_timestamp')
+
+    context = {
+        'review': review,
+        'comments': comments,
+        'form': form,
+    }
 
     return render(request, 'gamecritique/review.html', context)
 
@@ -113,7 +142,7 @@ def add_review(request, game_name_slug):
             if game:
                 review = form.save(commit=False)
                 review.game = game
-                review.views = 0
+                review.user = request.user
                 review.save()
 
                 return redirect(reverse('gamecritique:show_game', kwargs={'game_name_slug': game_name_slug}))

@@ -10,7 +10,22 @@
 <h1>Review for {{ review.game.name }}</h1>
 
 <div style="margin-bottom: 20px;">
-                <p><strong>{{ review.user.username }}</strong> — {{ review.rating }}★</p>
+                <p>
+                    <strong>{{ review.user.username }}</strong>
+                    {% if review.rating == 1 %}
+                        ★☆☆☆☆
+                    {% elif review.rating == 2 %}
+                        ★★☆☆☆
+                    {% elif review.rating == 3 %}
+                        ★★★☆☆
+                    {% elif review.rating == 4 %}
+                        ★★★★☆
+                    {% elif review.rating == 5 %}
+                        ★★★★★
+                    {% else %}
+                        No rating
+                    {% endif %}
+                </p>
                 <p>{{ review.content }}</p>
                 <p><small>{{ review.created_at_timestamp }}</small></p>
             </div>
@@ -18,7 +33,7 @@
 {% if comments %}
             {% for comment in comments %}
                 <div class="comment_section">
-                    <p><strong>{{ comment.user.username }}</strong> — {{ review.rating }}★</p>
+                    <p><strong>{{ comment.user.username }}</strong></p>
                     <p>{{ comment.content }}</p>
                     <p><small>{{ comment.created_at_timestamp }}</small></p>
                 </div>
@@ -29,8 +44,7 @@
 
 {% if user.is_authenticated %}
 <div>
-        <form id="add_comment_form" method="post" action="/gamecritique/game/{{ game.slug }}/add_comment/">
-            {% csrf_token %}
+        <form id="add_comment_form" method="post" action="{% url 'gamecritique:add_comment' review.id %}">
             {% csrf_token %}
 
             {% for hidden in form.hidden_fields %}

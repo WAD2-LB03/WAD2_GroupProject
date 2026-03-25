@@ -10,6 +10,7 @@ urlpatterns = [
     path("search-games/", views.search_games, name="search_games"), # Ajax path for updating search results
     path("game/<slug:game_name_slug>/", views.show_game, name="show_game"),
     path("review/<int:review_id>/", views.show_review, name="show_review"),
+    path("review/<int:review_id>/add_comment/", views.add_comment, name="add_comment"),
     path("game/<slug:game_name_slug>/add_review/", views.add_review, name="add_review"),
     path("register/", views.register, name="register"),
     path("login/", views.user_login, name="login"),

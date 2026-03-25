@@ -31,7 +31,23 @@
             {% for review in reviews %}
             <div style="margin-bottom: 20px;">
                 <a href="{% url 'gamecritique:show_review' review.id %}">
-                <p><strong>{{ review.user.username }}</strong> — {{ review.rating }}★</p></a>
+                    <p>
+                        <strong>{{ review.user.username }}</strong>
+                        {% if review.rating == 1 %}
+                            ★☆☆☆☆
+                        {% elif review.rating == 2 %}
+                            ★★☆☆☆
+                        {% elif review.rating == 3 %}
+                            ★★★☆☆
+                        {% elif review.rating == 4 %}
+                            ★★★★☆
+                        {% elif review.rating == 5 %}
+                            ★★★★★
+                        {% else %}
+                            No rating
+                        {% endif %}
+                    </p>
+                </a>
                 <p>{{ review.content }}</p>
                 <p><small>{{ review.created_at_timestamp }}</small></p>
             </div>
