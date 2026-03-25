@@ -1,6 +1,6 @@
 @import 'components/gameSmall.css';
 
-.featured_container {display: flex; flex-direction: column; align-items: center; margin-top: 40px;}
+.featured_container {display: flex; flex-direction: column; align-items: center;}
 
 .section_title {color:#14A35B; font-size: xx-large; font-weight: bolder; margin-bottom: 20px; text-align: center;}
 
@@ -44,22 +44,28 @@
     display: none;
 }
 
+#trending_container {
+    position: relative;
+}
+
 #trending_container::before, #trending_container::after {
     content: "";
     position: absolute;
-    top: 80%;
-    height: 40%;
+
+    top: 10%;
+    height: 100%;
     width: 8px;
+
     background: #14A35B;
     z-index: 2;
 }
 
 #trending_container::before {
-    left: 36px;
+    left: -8px;
     box-shadow: 6px 0 8px -1px rgba(0, 0, 0, 0.5)
 }
 
 #trending_container::after {
-    right: 36px;
+    right: -8px;
     box-shadow: -6px 0 8px -1px rgba(0, 0, 0, 0.5)
 }
