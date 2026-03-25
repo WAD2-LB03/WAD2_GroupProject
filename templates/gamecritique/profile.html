@@ -30,6 +30,9 @@
         <p><strong>Surname:</strong> {{ user.last_name }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Bio:</strong> {{ profile.bio }}</p>
+        {% if profile.total_donuts %}
+            <p><strong>Total Donuts:</strong>{{ profile.total_donuts }}</p>
+        {% endif %}
     </div>
 </div>
 

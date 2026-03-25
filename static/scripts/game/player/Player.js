@@ -140,6 +140,10 @@ class Player {
             }
         }
     }
+
+    getTotalDonuts() {
+        return this.score.getTotalScore();
+    }
 }
 
 const instance = new Player();

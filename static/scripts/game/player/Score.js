@@ -59,6 +59,10 @@ export default class Score {
         this.#updateText();
     }
 
+    getTotalScore() {
+        return this.totalScore;
+    }
+
     getCurScore() {
         return this.curScore;
     }

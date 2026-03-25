@@ -5,11 +5,13 @@
     <head lang="en">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GameCritique - GAME!</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Silkscreen&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/gamepage.css' %}" />
-
-        <title>GameCritique - GAME!</title>
+        <script>
+            const updateDonutsUrl = "{% url 'gamecritique:update_donuts' %}"
+        </script>
     </head>
 
     <body style="font-family: 'Silkscreen';">

@@ -7,7 +7,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("about/", views.about, name="about"),
     path("search/", views.search, name="search"),
-    path("search-games/", views.search_games, name="search_games"), # Ajax path for updating search results
+    path("search-games/", views.search_games, name="search_games"),  # Ajax path for updating search results
     path("game/<slug:game_name_slug>/", views.show_game, name="show_game"),
     path("review/<int:review_id>/", views.show_review, name="show_review"),
     path("review/<int:review_id>/add_comment/", views.add_comment, name="add_comment"),
@@ -18,5 +18,6 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     path("gamepage", views.gamepage, name="gamepage"),
     path("profile", views.profile, name="profile"),
-    path("collect-key/", views.collect_key, name='collect_key'), # AJAX path for setting user has_key variable
+    path("collect-key/", views.collect_key, name='collect_key'),  # AJAX path for setting user has_key variable
+    path("update-donuts/", views.update_donuts, name="update_donuts"),  #AJAX path for updating user's total_donuts variable
 ]

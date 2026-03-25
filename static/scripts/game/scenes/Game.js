@@ -40,11 +40,21 @@ export class Game extends Phaser.Scene
     update (time, delta) {
         const dT = delta / 1000;
 
+        this.updateDonutsTimer += dT;
+
+        if (this.updateDonutsTimer >= 10) {
+            this.updateDonutsTimer -= 10;
+            this.updateDatabase();
+        }
+        
+
         Player.update(dT);
         Debug.update();
     }
 
     initVariables () {
+        this.updateDonutsTimer = 0;
+
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
@@ -58,5 +68,22 @@ export class Game extends Phaser.Scene
 
     printo() {
         console.log('printo');
+    }
+
+    updateDatabase() {
+        fetch(updateDonutsUrl+`?donuts=${encodeURIComponent(Player.getTotalDonuts())}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': this.#getCSRFToken()
+            }
+        });
+    }
+
+    #getCSRFToken() {
+        return document.cookie
+            .split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            .split('=')[1];
     }
 }

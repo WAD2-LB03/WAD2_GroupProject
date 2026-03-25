@@ -235,6 +235,20 @@ def collect_key(request):
     
     return JsonResponse({'status': 'error'}, status=400)
 
+@login_required
+def update_donuts(request):
+    donuts = request.GET.get('donuts', '')  # Returns the string after '?donuts=' or the second parameter '' if there's nothing
+
+    if request.method == 'POST' and donuts:
+        profile, _ = UserProfile.objects.get_or_create(user=request.user)
+        profile.total_donuts = donuts
+        profile.save()
+
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error'}, status=400)
+
+
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
 

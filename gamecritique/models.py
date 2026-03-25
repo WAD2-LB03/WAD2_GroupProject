@@ -89,6 +89,7 @@ class UserProfile(models.Model):
 
     # Game related variables
     has_key = models.BooleanField(default=False)
+    total_donuts = models.PositiveBigIntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.user.username

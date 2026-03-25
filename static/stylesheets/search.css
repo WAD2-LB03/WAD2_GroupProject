@@ -1,5 +1,5 @@
-@import 'components/searchBar.css';
 @import 'components/gameSmall.css';
+@import 'components/textInput.css';
 
 #search-results {
     display: grid;
