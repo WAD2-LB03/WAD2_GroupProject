@@ -1,0 +1,11 @@
+.comment_container {background-color: #AEEBD9; padding: 15px;
+                   border-radius: 5px; display: flex;
+                   text-align: left; display: flex; flex-direction: column; height: max-content;}
+
+.comment_section {margin-left: 20px;}
+
+.comment_text {display: flex; flex-direction: row;}
+
+.comment_box textarea {background-color: #CDEDDD; margin-left: 40px; width: 100%; height: 30px; margin-top: 10px;}
+
+.comment_button {margin-left: 43px; margin-top: 10px;}
