@@ -8,9 +8,6 @@
 {% block head_block %}
     <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/index.css' %}?v={% now 'U' %}" />
     <script src="{% static 'scripts/interactivity/sidewaysScroll.js' %}?v={% now 'U' %}" defer></script>
-    <script>
-        const collectUrl = "{% url 'gamecritique:collect_key' %}";
-    </script>
 {% endblock %}
 
 {% block body_block %}
@@ -26,7 +23,7 @@
 
         <div class="featured_right">
             <h3 class="featured_game_name">
-                <a href="{% url 'gamecritique:show_game' random_game.slug %}">
+                <a href="{% url 'gamecritique:show_game' random_game.slug %}?featured=1">
                 {{ random_game.name }}</a></h3>
 
             <div class="tag_section">
@@ -52,9 +49,9 @@
 
 <br><br><hr><br>
 
-<div>
+<div id="trending_container">
     <h2 class="section_title">Trending</h2>
-    <div id="trending_container" class="sideways-scroll">
+    <div id="trending_scroll" class="sideways-scroll">
     {% for game in trending_games %}
         <div class="game-small">
             <img src="{{ game.image_url }}" alt="{{ game.name }}">
@@ -76,11 +73,6 @@
     </div>
 </div>
 
-{% if user.is_authenticated and not user.profile.has_key %}
-    <script src="{% static 'scripts/interactivity/key.js' %}?v={% now 'U' %}" defer></script>
-    <div id="key-container">
-        <img id='key' src="{% static 'images/keyGen.png' %}" alt="keytastic">
-    </div>
-{% endif %}
+<br><br><hr><br>
 
 {% endblock %}

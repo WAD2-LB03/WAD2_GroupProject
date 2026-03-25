@@ -23,8 +23,8 @@ def index(request):
     random_game = random.choice(games)
     trending_games = mostPopular(Game.objects)[:3]
     context_dict = {
-        "random_game": random_game,
-        "trending_games": trending_games,    
+        'random_game': random_game,
+        'trending_games': trending_games,    
     }
 
     response = render(request, 'gamecritique/index.html', context=context_dict)
@@ -72,18 +72,20 @@ def search_games(request):
     return JsonResponse({'results': data})
 
 def show_game(request, game_name_slug):
-    context_dict = {}
-
     try:
         game = Game.objects.get(slug=game_name_slug)
         reviews = Review.objects.filter(game=game).order_by('-created_at_timestamp')
-
-        context_dict['game'] = game
-        context_dict['reviews'] = reviews
-
+        isFeatured = request.GET.get('featured')        
     except Game.DoesNotExist:
-        context_dict['game'] = None
-        context_dict['reviews'] = None
+        game = None
+        reviews = None
+        isFeatured = None
+
+    context_dict = {
+        'game': game,
+        'reviews': reviews,
+        'isFeatured': isFeatured
+    }
 
     return render(request, 'gamecritique/game.html', context=context_dict)
 

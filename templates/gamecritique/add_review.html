@@ -5,31 +5,55 @@
     Add a Review
 {% endblock %}
 
+{% block head_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/add_review.css' %}?v={% now 'U' %}" />
+{% endblock %}
+
 {% block body_block %}
+<div id="game-display">
+    <h2><a href="{% url 'gamecritique:show_game' game.slug %}">Return to Game</a></h2>
+    <div class="game-small">
+        <img src="{{ game.image_url }}" alt="{{ game.name }}">
+        <div class="gs-info">
+            <span>{{ game.name}}</a></span>
+            <span>Tags: </span>
+            <span><div class="tag_list">
+            {% for tag in game.tags.all|slice:":5"  %}
+                <span class="tag_name">{{ tag.name }}</span>
+            {% endfor %}
+            {% if game.tags.count > 5 %}
+                <span class="tag_name">+{{ game.tags.count|add:"-5" }} more<span>
+            {% endif %}
+            </div></span>
+            <span>Release: {{ game.release_year }}</span>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
 <h1>Add a Review</h1>
 
 <form id="review_form" method="post" action="">
     {% csrf_token %}
-
-    <div style="display: flex; align-items: flex-end; gap: 30px;">
         
-        <div>
-            {{ form.content.errors }}
-            {{ form.content }}
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div>
-                <label for="{{ form.rating.id_for_label }}"><strong>Rating:</strong></label><br>
-                {{ form.rating.errors }}
-                {{ form.rating }}
-            </div>
-
-            <div>
-                <input type="submit" name="submit" value="Add Review" />
-            </div>
-        </div>
-
+    <div id='review'>
+        {{ form.content.errors }}
+        {{ form.content }}
     </div>
+
+    <div id='rating'>
+        {% for radio in form.rating %}
+            {{ radio.tag }}
+            <label for="{{ radio.id_for_label }}">
+                <span class='star'>★</span>
+            </label>
+        {% endfor %}
+    </div>
+
+    <div id='submit-container'>
+        <input type="submit" class='submit-button' name="submit" value="Post Review" />
+    </div>
+
 </form>
 {% endblock %}

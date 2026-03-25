@@ -1,9 +1,4 @@
-#search {
-    display: flex;
-    justify-content: center;
-}
-
-#search-bar {
+.text-input {
     background-color: #51b475;
     border-color: #2a623f;
 
@@ -12,12 +7,11 @@
     color: #2a623f;
     caret-color: #b1eec7;
 
+    width: 100%;
     padding-left: 10px;
-    width: 40%;
-    height: 30px;
 }
 
-#search-bar::placeholder {
+.text-input::placeholder {
     color: #3a915b;
     opacity: 1;
     font-style: italic;

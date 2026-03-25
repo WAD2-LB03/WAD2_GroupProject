@@ -1,0 +1,52 @@
+@import 'components/gameSmall.css';
+@import 'components/textInput.css';
+@import 'components/submitButton.css';
+
+#game-display {
+    width: 50%;
+}
+
+#review {
+    width: 50%;
+}
+
+#review-text {
+    padding: 10px;
+
+    border-width: 4px;
+    border-color: #2a623f;
+}
+
+#rating {
+    width: 50%;
+    gap: 8px;  /* Margins between stars */
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+#rating input {
+    display: none;
+}
+
+#submit-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.star {
+    font-size: 50px;
+    color: #AEEBD9;
+    cursor: pointer;
+    -webkit-text-stroke: 1.5px #2a623f;
+}
+
+#rating label:hover .star, 
+#rating label:hover ~ label .star {
+    color: #2a623f;
+}
+
+#rating input:checked ~ label .star {
+    color: #2a623f;
+}
