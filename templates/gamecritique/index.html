@@ -28,6 +28,30 @@
                 <a href="{% url 'gamecritique:show_game' random_game.slug %}?featured=1">
                 {{ random_game.name }}</a></h3>
 
+        <div class="featured_left">
+            <h3 class="game_review">
+                {% if reviews %}
+            {% for review in reviews %}
+            <div class="featured_left">  
+                    <p>
+                        <strong>{{ review.user.username }}</strong>
+                        {% if review.rating == 1 %}
+                            ★☆☆☆☆
+                        {% elif review.rating == 2 %}
+                            ★★☆☆☆
+                        {% elif review.rating == 3 %}
+                            ★★★☆☆
+                        {% elif review.rating == 4 %}
+                            ★★★★☆
+                        {% elif review.rating == 5 %}
+                            ★★★★★
+                        {% else %}
+                            No rating
+                        {% endif %}
+                    </p>
+                <p>{{ review.content }}</p>
+                <p><small>{{ review.created_at_timestamp }}</small></p>
+
             <div class="tag_section">
                 <span class="tag_text">Tags:</span>
                 <div class="tag_list">

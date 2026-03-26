@@ -5,15 +5,17 @@
 .section_title {color:#14A35B; font-size: xx-large; font-weight: bolder; margin-bottom: 20px; text-align: center;}
 
 .featured_section {width: 1400px; height: 300px; background-color: #AEEBD9; padding: 25px;
-                   border-radius: 12px; box-shadow: 5px 5px 5px 5px; display: flex; gap: 25px; 
-                   align-items: flex-start; position: relative; text-align: center;}
+                border-radius: 12px; box-shadow: 5px 5px 5px 5px; display: flex; gap: 25px; 
+                align-items: flex-start; position: relative; text-align: center;}
 
 .featured_section::after {content: ""; position: absolute; top: 20px; bottom: 20px;
-                          left: 50%; width: 2px; background-color: #2a623f;}
+                        left: 50%; width: 2px; background-color: #2a623f;}
 
 .featured_image {width: 27%; height: 80%; border-radius: 20px; margin-top: 27px;}
 
 .featured_right {width: 20%; display: flex; flex-direction: column; gap: 8px; text-align: center; align-items: center;}
+
+.featured_left {width: 20%; display: flex; flex-direction: column; gap: 8px; text-align: center; align-items: center;}
 
 .featured_game_name {font-size: large; margin-bottom: 5px;}
 
