@@ -35,12 +35,8 @@
 
         <h2 class="mb-3">Reviews</h2>
         {% if reviews %}
-            <ul>
             {% for review in reviews %}
-            <div class="mb-3">
-                <a href="{% url 'gamecritique:add_review' game.slug %}" class="btn btn-success mt-2">
-                    Write Review
-                </a>
+            <div class="mb-3">  
                     <p>
                         <strong>{{ review.user.username }}</strong>
                         {% if review.rating == 1 %}
@@ -57,12 +53,10 @@
                             No rating
                         {% endif %}
                     </p>
-                </a>
                 <p>{{ review.content }}</p>
                 <p><small>{{ review.created_at_timestamp }}</small></p>
             </div>
             {% endfor %}
-            </ul>
 
         {% else %}
             <strong>No reviews for this game.</strong>
@@ -77,13 +71,16 @@
 
     {% else %}
         <strong>The specified game does not exist.</strong>
-    </div>
     {% endif %}
+     </div>
 
     {% if user.is_authenticated and not user.profile.has_key and isFeatured %}
         <script src="{% static 'scripts/interactivity/key.js' %}?v={% now 'U' %}" defer></script>
         <div id="key-container">
             <img id='key' src="{% static 'images/keyGen.png' %}" alt="keytastic">
-        </div>
+            </div>
     {% endif %}
+
+    </div>
+
 {% endblock %}
