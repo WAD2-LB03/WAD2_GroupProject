@@ -28,11 +28,26 @@
                 <a href="{% url 'gamecritique:show_game' random_game.slug %}?featured=1">
                 {{ random_game.name }}</a></h3>
 
+            <div class="tag_section">
+                <span class="tag_text">Tags:</span>
+                <div class="tag_list">
+                {% for tag in random_game.tags.all|slice:":5" %}
+                    <span class="tag_name">{{ tag.name }}</span>
+                {% endfor %}
+                {% if random_game.tags.count > 5 %}
+                    <span class="tag_name">+{{ random_game.tags.count|add:"-5" }} more<span>
+                {% endif %}
+                </div>
+            </div>
+
+            <div class="featured_release">
+                <span class="release_text">Release:</span>
+                <span class="release_year">{{ random_game.release_year}}</span>
+            </div>
+        </div>
         <div class="featured_left">
             <h3 class="featured_game_review">
-                {% if reviews %}
-                    {% for review in reviews %}
-                    <div class="featured_left">  
+                    <div class="game_review">  
                             <p>
                                 <strong>{{ review.user.username }}</strong>
                                 {% if review.rating == 1 %}
@@ -52,26 +67,8 @@
                         <p>{{ review.content }}</p>
                         <p><small>{{ review.created_at_timestamp }}</small></p>
                     </div>
-                    {% endfor %}
-                {% endif %}
-
-            <div class="tag_section">
-                <span class="tag_text">Tags:</span>
-                <div class="tag_list">
-                {% for tag in random_game.tags.all|slice:":5" %}
-                    <span class="tag_name">{{ tag.name }}</span>
-                {% endfor %}
-                {% if random_game.tags.count > 5 %}
-                    <span class="tag_name">+{{ random_game.tags.count|add:"-5" }} more<span>
-                {% endif %}
                 </div>
             </div>
-
-            <div class="featured_release">
-                <span class="release_text">Release:</span>
-                <span class="release_year">{{ random_game.release_year}}</span>
-            </div>
-        </div>
     </div>
 {% endif %}
 </div>

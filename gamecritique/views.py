@@ -22,11 +22,14 @@ def index(request):
     games = Game.objects.all()
     random_game = random.choice(games)
     trending_games = mostPopular(Game.objects)[:3]
+    review = Review.objects.filter(game=random_game).order_by('-created_at_timestamp').first()
     context_dict = {
         'random_game': random_game,
         'trending_games': trending_games,    
+        'review': review
     }
 
+    
     response = render(request, 'gamecritique/index.html', context=context_dict)
     return response
 
