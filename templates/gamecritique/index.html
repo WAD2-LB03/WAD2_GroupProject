@@ -45,33 +45,34 @@
                 <span class="release_year">{{ random_game.release_year}}</span>
             </div>
         </div>
+
         <div class="featured_left">
-            <h3 class="featured_game_review">
-                    <div class="game_review">  
-                            <p>
-                                <strong>{{ review.user.username }}</strong>
-                                {% if review.rating == 1 %}
-                                    ★☆☆☆☆
-                                {% elif review.rating == 2 %}
-                                    ★★☆☆☆
-                                {% elif review.rating == 3 %}
-                                    ★★★☆☆
-                                {% elif review.rating == 4 %}
-                                    ★★★★☆
-                                {% elif review.rating == 5 %}
-                                    ★★★★★
-                                {% else %}
-                                    No rating
-                                {% endif %}
-                            </p>
-                        <p>{{ review.content }}</p>
-                        <p><small>{{ review.created_at_timestamp }}</small></p>
-                    </div>
+            <h3 class="game_review">
+                {% if review %}
+                <div class="featured_left">  
+                    <p>
+                        <strong>{{ review.user.username }}</strong>
+                        {% if review.rating == 1 %}
+                            ★☆☆☆☆
+                        {% elif review.rating == 2 %}
+                            ★★☆☆☆
+                        {% elif review.rating == 3 %}
+                            ★★★☆☆
+                        {% elif review.rating == 4 %}
+                            ★★★★☆
+                        {% elif review.rating == 5 %}
+                            ★★★★★
+                        {% else %}
+                            No rating
+                        {% endif %}
+                    </p>
+                <p>{{ review.content }}</p>
+                <p><small>{{ review.created_at_timestamp }}</small></p>
                 </div>
-            </div>
+                {% endif %}
+            </h3>
+        </div>
     </div>
-    {% endfor %}
-{% endif %}
 {% endif %}
 </div>
 

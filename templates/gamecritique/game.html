@@ -44,7 +44,7 @@
         {% if reviews %}
             {% for review in reviews %}
             <div class="mb-3">  
-                    <p>
+                    <a href="{% url 'gamecritique:show_review' review.id %}"><p>
                         <strong>{{ review.user.username }}</strong>
                         {% if review.rating == 1 %}
                             ★☆☆☆☆
@@ -59,7 +59,7 @@
                         {% else %}
                             No rating
                         {% endif %}
-                    </p>
+                    </p></a>
                 <p>{{ review.content }}</p>
                 <p><small>{{ review.created_at_timestamp }}</small></p>
             </div>
