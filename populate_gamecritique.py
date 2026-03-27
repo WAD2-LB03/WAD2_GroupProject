@@ -1,4 +1,5 @@
 import os
+import re
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'WAD2_GroupProject.settings')
 
@@ -74,7 +75,10 @@ def populate():
             date = release_date.get("date", "")
             release_year = None
             if len(date) >= 4:
-                release_year = int(date[-4:]) # Get last 4 characters of date info, should be year
+                release_year = None
+                match = re.search(r'\d{4}', date)
+                if match:
+                    release_year = int(match.group())
             game.release_year = release_year
             game.save()
 
