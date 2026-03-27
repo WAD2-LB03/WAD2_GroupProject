@@ -1,7 +1,7 @@
 export default class Debug {
     static scene;
     static g;
-    static active = true;
+    static active = false;
 
     static colliders = [];  // {sprite, collider}
 
